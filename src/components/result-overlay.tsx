@@ -5,7 +5,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import confetti from 'canvas-confetti';
 import { Participant } from '@/lib/types';
 import { Button } from '@/components/ui/button';
-import { Check, Undo2, Trophy } from 'lucide-react';
+import { Check, Undo2, Trophy, Sparkles, Star } from 'lucide-react';
 
 interface ResultOverlayProps {
   isVisible: boolean;
@@ -23,25 +23,29 @@ export function ResultOverlay({ isVisible, winner, onSave, onUndo, playSfx }: Re
       confettiFiredRef.current = true;
       playSfx('win');
       
-      const duration = 3000;
+      const duration = 4000;
       const animationEnd = Date.now() + duration;
       
-      const colors = ['#007e3d', '#00ff7a', '#ffd700', '#ffffff', '#00d4aa'];
+      const colors = ['#007e3d', '#00ff7a', '#ffd700', '#ffffff', '#00d4aa', '#00a84f'];
       
       const frame = () => {
         confetti({
-          particleCount: 3,
+          particleCount: 5,
           angle: 60,
-          spread: 55,
-          origin: { x: 0, y: 0.7 },
+          spread: 70,
+          origin: { x: 0, y: 0.6 },
           colors,
+          gravity: 1.2,
+          scalar: 1.2,
         });
         confetti({
-          particleCount: 3,
+          particleCount: 5,
           angle: 120,
-          spread: 55,
-          origin: { x: 1, y: 0.7 },
+          spread: 70,
+          origin: { x: 1, y: 0.6 },
           colors,
+          gravity: 1.2,
+          scalar: 1.2,
         });
 
         if (Date.now() < animationEnd) {
@@ -53,13 +57,27 @@ export function ResultOverlay({ isVisible, winner, onSave, onUndo, playSfx }: Re
       
       setTimeout(() => {
         confetti({
-          particleCount: 150,
-          spread: 100,
-          origin: { y: 0.6 },
+          particleCount: 200,
+          spread: 120,
+          origin: { y: 0.5 },
           colors,
+          gravity: 1,
+          scalar: 1.4,
         });
         playSfx('pop');
       }, 500);
+      
+      setTimeout(() => {
+        confetti({
+          particleCount: 100,
+          angle: 90,
+          spread: 360,
+          origin: { y: 0.4 },
+          colors,
+          shapes: ['star'],
+          scalar: 1.5,
+        });
+      }, 1000);
     }
     
     if (!isVisible) {
@@ -80,31 +98,87 @@ export function ResultOverlay({ isVisible, winner, onSave, onUndo, playSfx }: Re
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="absolute inset-0 bg-black/70 backdrop-blur-sm"
+            className="absolute inset-0 bg-gradient-to-br from-black/80 via-emerald-950/70 to-black/80 backdrop-blur-md"
           />
           
           <div className="absolute inset-0 overflow-hidden pointer-events-none">
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] rounded-full bg-gradient-radial from-emerald-500/20 via-emerald-900/5 to-transparent blur-3xl" />
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[1000px] h-[1000px] rounded-full bg-gradient-radial from-emerald-500/30 via-green-500/10 to-transparent blur-3xl animate-pulse" />
           </div>
+
+          {[...Array(12)].map((_, i) => (
+            <motion.div
+              key={i}
+              initial={{ opacity: 0, scale: 0 }}
+              animate={{ opacity: [0, 1, 0], scale: [0, 1.5, 2] }}
+              transition={{ 
+                delay: i * 0.15, 
+                duration: 2, 
+                repeat: Infinity,
+                repeatDelay: 1 
+              }}
+              className="absolute w-3 h-3 rounded-full bg-gradient-to-r from-yellow-400 to-amber-300"
+              style={{
+                left: `${50 + 35 * Math.cos((i * 30 * Math.PI) / 180)}%`,
+                top: `${50 + 35 * Math.sin((i * 30 * Math.PI) / 180)}%`,
+              }}
+            />
+          ))}
 
           <motion.div
             initial={{ scale: 0.8, opacity: 0, y: 50 }}
             animate={{ scale: 1, opacity: 1, y: 0 }}
             exit={{ scale: 0.9, opacity: 0, y: -30 }}
-            transition={{ type: "spring", damping: 20, stiffness: 300 }}
-            className="relative z-10 flex flex-col items-center gap-8 p-12"
+            transition={{ type: "spring", damping: 15, stiffness: 300 }}
+            className="relative z-10 flex flex-col items-center gap-10 p-12"
           >
             <motion.div
               initial={{ scale: 0 }}
               animate={{ scale: 1 }}
-              transition={{ delay: 0.2, type: "spring", damping: 10 }}
-              className="flex items-center gap-4"
+              transition={{ delay: 0.2, type: "spring", damping: 8 }}
+              className="relative flex items-center gap-6"
             >
-              <Trophy className="w-16 h-16 text-yellow-400 animate-float" />
-              <h1 className="font-['Orbitron'] text-5xl md:text-7xl font-black text-gold animate-float">
+              <motion.div
+                animate={{ 
+                  rotate: [0, -15, 15, -10, 10, 0],
+                  scale: [1, 1.1, 1, 1.1, 1]
+                }}
+                transition={{ 
+                  duration: 2, 
+                  repeat: Infinity,
+                  repeatDelay: 1
+                }}
+              >
+                <Trophy className="w-20 h-20 text-yellow-400 drop-shadow-[0_0_20px_rgba(255,215,0,0.8)]" />
+              </motion.div>
+              
+              <motion.h1 
+                className="font-['Be_Vietnam_Pro'] text-6xl md:text-8xl font-black text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 via-amber-300 to-yellow-500 drop-shadow-[0_0_30px_rgba(255,215,0,0.6)]"
+                animate={{
+                  textShadow: [
+                    '0 0 20px rgba(255,215,0,0.6)',
+                    '0 0 40px rgba(255,215,0,0.9)',
+                    '0 0 20px rgba(255,215,0,0.6)',
+                  ]
+                }}
+                transition={{ duration: 2, repeat: Infinity }}
+              >
                 CHÚC MỪNG
-              </h1>
-              <Trophy className="w-16 h-16 text-yellow-400 animate-float" style={{ animationDelay: '0.5s' }} />
+              </motion.h1>
+              
+              <motion.div
+                animate={{ 
+                  rotate: [0, 15, -15, 10, -10, 0],
+                  scale: [1, 1.1, 1, 1.1, 1]
+                }}
+                transition={{ 
+                  duration: 2, 
+                  repeat: Infinity,
+                  repeatDelay: 1,
+                  delay: 0.5
+                }}
+              >
+                <Trophy className="w-20 h-20 text-yellow-400 drop-shadow-[0_0_20px_rgba(255,215,0,0.8)]" />
+              </motion.div>
             </motion.div>
 
             <motion.div

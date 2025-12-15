@@ -86,17 +86,17 @@ export default function LuckyDrawStage() {
 
   return (
     <div className="relative min-h-screen overflow-hidden noise-overlay">
-      <div className="fixed inset-0 bg-gradient-to-br from-purple-600 via-pink-600 to-orange-600" />
+      <div className="fixed inset-0 bg-gradient-to-br from-emerald-950 via-green-900 to-teal-950" />
       
       <div className="fixed inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-0 left-1/4 w-[600px] h-[600px] bg-yellow-400/20 rounded-full blur-[150px]" />
-        <div className="absolute bottom-0 right-1/4 w-[500px] h-[500px] bg-cyan-400/25 rounded-full blur-[120px]" />
-        <div className="absolute top-1/2 left-1/2 w-[700px] h-[700px] bg-magenta-500/15 rounded-full blur-[180px] -translate-x-1/2 -translate-y-1/2" />
+        <div className="absolute top-0 left-1/4 w-[600px] h-[600px] bg-emerald-400/15 rounded-full blur-[150px]" />
+        <div className="absolute bottom-0 right-1/4 w-[500px] h-[500px] bg-cyan-400/20 rounded-full blur-[120px]" />
+        <div className="absolute top-1/2 left-1/2 w-[700px] h-[700px] bg-green-500/10 rounded-full blur-[180px] -translate-x-1/2 -translate-y-1/2" />
       </div>
 
       <div className="fixed inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-0 left-0 w-32 h-full bg-gradient-to-r from-orange-500/20 to-transparent opacity-40 animate-light-sweep" />
-        <div className="absolute top-0 right-0 w-32 h-full bg-gradient-to-l from-magenta-500/20 to-transparent opacity-40 animate-light-sweep" style={{ animationDelay: '2s' }} />
+        <div className="absolute top-0 left-0 w-32 h-full bg-gradient-to-r from-emerald-500/20 to-transparent opacity-40 animate-light-sweep" />
+        <div className="absolute top-0 right-0 w-32 h-full bg-gradient-to-l from-green-500/20 to-transparent opacity-40 animate-light-sweep" style={{ animationDelay: '2s' }} />
       </div>
 
       {phase === 'spinning' && (
@@ -109,11 +109,11 @@ export default function LuckyDrawStage() {
         <header className="relative py-6 px-8">
           <div className="max-w-7xl mx-auto flex items-center justify-between">
             <div className="flex items-center gap-4">
-              <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-orange-500 to-pink-600 flex items-center justify-center shadow-lg shadow-orange-500/50">
+              <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-emerald-600 to-green-700 flex items-center justify-center shadow-lg shadow-emerald-500/50">
                 <Sparkles className="w-8 h-8 text-white" />
               </div>
               <div>
-                <h1 className="font-['Orbitron'] text-2xl font-bold text-white tracking-wider">
+                <h1 className="font-['Be_Vietnam_Pro'] text-2xl font-bold text-white tracking-wider">
                   QUAY SỐ TRÚNG THƯỞNG
                 </h1>
                 <p className="text-sm text-white/50 font-mono">{sessionId}</p>
@@ -122,12 +122,12 @@ export default function LuckyDrawStage() {
 
             <div className="flex items-center gap-6">
               <StatBadge icon={Users} label="Tổng" value={stats.total} color="white" />
-              <StatBadge icon={Trophy} label="Đã trúng" value={stats.won} color="orange" />
+              <StatBadge icon={Trophy} label="Đã trúng" value={stats.won} color="emerald" />
               <StatBadge icon={Clock} label="Còn lại" value={stats.remaining} color="cyan" />
             </div>
           </div>
 
-          <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-orange-400/40 to-transparent" />
+          <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-emerald-400/40 to-transparent" />
         </header>
 
         <main className="flex-1 flex flex-col items-center justify-center px-8 py-12">
@@ -168,12 +168,12 @@ export default function LuckyDrawStage() {
                     onClick={handleSpin}
                     disabled={isDisabled}
                     className={`
-                      relative px-16 py-8 text-2xl font-['Orbitron'] font-black tracking-widest
-                      bg-gradient-to-r from-orange-600 via-pink-600 to-orange-600
-                      hover:from-orange-500 hover:via-pink-500 hover:to-orange-500
+                      relative px-16 py-8 text-2xl font-['Be_Vietnam_Pro'] font-black tracking-widest
+                      bg-gradient-to-r from-emerald-600 via-green-600 to-emerald-600
+                      hover:from-emerald-500 hover:via-green-500 hover:to-emerald-500
                       disabled:opacity-50 disabled:cursor-not-allowed
-                      rounded-2xl border-2 border-orange-400/50
-                      shadow-[0_0_60px_rgba(255,107,0,0.7),0_0_100px_rgba(255,0,153,0.4)]
+                      rounded-2xl border-2 border-emerald-400/50
+                      shadow-[0_0_60px_rgba(0,126,61,0.9),0_0_100px_rgba(0,255,122,0.5)]
                       ${!isDisabled ? 'animate-pulse-glow' : ''}
                       transition-all duration-300
                     `}
@@ -243,11 +243,11 @@ export default function LuckyDrawStage() {
               exit={{ scale: 0.9, opacity: 0 }}
               className="flex flex-col items-center gap-8 p-12"
             >
-              <div className="w-24 h-24 rounded-full bg-gradient-to-br from-orange-500 to-pink-600 flex items-center justify-center shadow-[0_0_80px_rgba(255,107,0,0.8),0_0_120px_rgba(255,0,153,0.5)]">
+              <div className="w-24 h-24 rounded-full bg-gradient-to-br from-emerald-500 to-green-600 flex items-center justify-center shadow-[0_0_80px_rgba(0,126,61,0.8),0_0_120px_rgba(0,255,122,0.5)]">
                 <Sparkles className="w-12 h-12 text-white" />
               </div>
               
-              <h1 className="font-['Orbitron'] text-4xl md:text-5xl font-black text-white text-center">
+              <h1 className="font-['Be_Vietnam_Pro'] text-4xl md:text-5xl font-black text-white text-center">
                 QUAY SỐ TRÚNG THƯỞNG
               </h1>
               
@@ -258,7 +258,7 @@ export default function LuckyDrawStage() {
               <Button
                 onClick={handleStartEvent}
                 size="lg"
-                className="px-12 py-6 text-xl font-bold bg-gradient-to-r from-orange-600 to-pink-600 hover:from-orange-500 hover:to-pink-500 rounded-xl shadow-[0_0_50px_rgba(255,107,0,0.8)]"
+                className="px-12 py-6 text-xl font-bold bg-gradient-to-r from-emerald-600 to-green-600 hover:from-emerald-500 hover:to-green-500 rounded-xl shadow-[0_0_50px_rgba(0,126,61,0.9)]"
               >
                 <Play className="w-6 h-6 mr-3" />
                 BẮT ĐẦU
@@ -280,11 +280,11 @@ function StatBadge({
   icon: React.ElementType; 
   label: string; 
   value: number; 
-  color: 'white' | 'orange' | 'cyan' 
+  color: 'white' | 'emerald' | 'cyan' 
 }) {
   const colorClasses = {
     white: 'text-white',
-    orange: 'text-orange-400',
+    emerald: 'text-emerald-400',
     cyan: 'text-cyan-400',
   };
 
@@ -293,7 +293,7 @@ function StatBadge({
       <Icon className={`w-5 h-5 ${colorClasses[color]}`} />
       <div className="flex flex-col">
         <span className="text-xs text-white/50 uppercase tracking-wider">{label}</span>
-        <span className={`font-['Orbitron'] font-bold text-xl ${colorClasses[color]}`}>{value}</span>
+        <span className={`font-['Be_Vietnam_Pro'] font-bold text-xl ${colorClasses[color]}`}>{value}</span>
       </div>
     </div>
   );

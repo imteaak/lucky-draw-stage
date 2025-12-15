@@ -10,8 +10,8 @@ interface AudioSettings {
 
 export function useAudio() {
   const [settings, setSettings] = useState<AudioSettings>({
-    bgmVolume: 0.25,
-    sfxVolume: 0.7,
+    bgmVolume: 0.35,
+    sfxVolume: 0.8,
     muted: false,
   });
   const [audioUnlocked, setAudioUnlocked] = useState(false);
@@ -27,16 +27,16 @@ export function useAudio() {
     bgmRef.current.loop = true;
     bgmRef.current.volume = settings.bgmVolume;
 
-    spinBgmRef.current = new Audio('https://assets.mixkit.co/music/preview/mixkit-driving-ambition-32.mp3');
+    spinBgmRef.current = new Audio('https://assets.mixkit.co/music/preview/mixkit-epic-winner-2026.mp3');
     spinBgmRef.current.loop = true;
-    spinBgmRef.current.volume = settings.bgmVolume * 1.4;
+    spinBgmRef.current.volume = settings.bgmVolume * 1.5;
 
     const sfxUrls = {
-      click: 'https://assets.mixkit.co/active_storage/sfx/2568/2568-preview.mp3',
+      click: 'https://assets.mixkit.co/active_storage/sfx/2571/2571-preview.mp3',
       tick: 'https://assets.mixkit.co/active_storage/sfx/2571/2571-preview.mp3',
-      stop: 'https://assets.mixkit.co/active_storage/sfx/2572/2572-preview.mp3',
+      stop: 'https://assets.mixkit.co/active_storage/sfx/2869/2869-preview.mp3',
       win: 'https://assets.mixkit.co/active_storage/sfx/1435/1435-preview.mp3',
-      pop: 'https://assets.mixkit.co/active_storage/sfx/2003/2003-preview.mp3',
+      pop: 'https://assets.mixkit.co/active_storage/sfx/2018/2018-preview.mp3',
     };
 
     Object.entries(sfxUrls).forEach(([key, url]) => {
@@ -57,7 +57,7 @@ export function useAudio() {
       bgmRef.current.volume = settings.muted ? 0 : settings.bgmVolume;
     }
     if (spinBgmRef.current) {
-      spinBgmRef.current.volume = settings.muted ? 0 : settings.bgmVolume * 1.4;
+      spinBgmRef.current.volume = settings.muted ? 0 : settings.bgmVolume * 1.5;
     }
     sfxRefs.current.forEach(audio => {
       audio.volume = settings.muted ? 0 : settings.sfxVolume;
