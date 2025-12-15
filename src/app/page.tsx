@@ -86,15 +86,17 @@ export default function LuckyDrawStage() {
 
   return (
     <div className="relative min-h-screen overflow-hidden noise-overlay">
-      <div className="fixed inset-0 bg-gradient-to-br from-slate-950 via-slate-900 to-emerald-950" />
+      <div className="fixed inset-0 bg-gradient-to-br from-purple-600 via-pink-600 to-orange-600" />
       
       <div className="fixed inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-0 left-1/4 w-[600px] h-[600px] bg-emerald-500/5 rounded-full blur-[150px]" />
-        <div className="absolute bottom-0 right-1/4 w-[500px] h-[500px] bg-emerald-600/8 rounded-full blur-[120px]" />
+        <div className="absolute top-0 left-1/4 w-[600px] h-[600px] bg-yellow-400/20 rounded-full blur-[150px]" />
+        <div className="absolute bottom-0 right-1/4 w-[500px] h-[500px] bg-cyan-400/25 rounded-full blur-[120px]" />
+        <div className="absolute top-1/2 left-1/2 w-[700px] h-[700px] bg-magenta-500/15 rounded-full blur-[180px] -translate-x-1/2 -translate-y-1/2" />
       </div>
 
       <div className="fixed inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-0 left-0 w-32 h-full bg-gradient-to-r from-emerald-500/10 to-transparent opacity-30 animate-light-sweep" />
+        <div className="absolute top-0 left-0 w-32 h-full bg-gradient-to-r from-orange-500/20 to-transparent opacity-40 animate-light-sweep" />
+        <div className="absolute top-0 right-0 w-32 h-full bg-gradient-to-l from-magenta-500/20 to-transparent opacity-40 animate-light-sweep" style={{ animationDelay: '2s' }} />
       </div>
 
       {phase === 'spinning' && (
@@ -107,7 +109,7 @@ export default function LuckyDrawStage() {
         <header className="relative py-6 px-8">
           <div className="max-w-7xl mx-auto flex items-center justify-between">
             <div className="flex items-center gap-4">
-              <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-emerald-500 to-emerald-700 flex items-center justify-center shadow-lg shadow-emerald-500/30">
+              <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-orange-500 to-pink-600 flex items-center justify-center shadow-lg shadow-orange-500/50">
                 <Sparkles className="w-8 h-8 text-white" />
               </div>
               <div>
@@ -120,12 +122,12 @@ export default function LuckyDrawStage() {
 
             <div className="flex items-center gap-6">
               <StatBadge icon={Users} label="Tổng" value={stats.total} color="white" />
-              <StatBadge icon={Trophy} label="Đã trúng" value={stats.won} color="emerald" />
-              <StatBadge icon={Clock} label="Còn lại" value={stats.remaining} color="yellow" />
+              <StatBadge icon={Trophy} label="Đã trúng" value={stats.won} color="orange" />
+              <StatBadge icon={Clock} label="Còn lại" value={stats.remaining} color="cyan" />
             </div>
           </div>
 
-          <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent" />
+          <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-orange-400/40 to-transparent" />
         </header>
 
         <main className="flex-1 flex flex-col items-center justify-center px-8 py-12">
@@ -167,11 +169,11 @@ export default function LuckyDrawStage() {
                     disabled={isDisabled}
                     className={`
                       relative px-16 py-8 text-2xl font-['Orbitron'] font-black tracking-widest
-                      bg-gradient-to-r from-emerald-600 via-emerald-500 to-emerald-600
-                      hover:from-emerald-500 hover:via-emerald-400 hover:to-emerald-500
+                      bg-gradient-to-r from-orange-600 via-pink-600 to-orange-600
+                      hover:from-orange-500 hover:via-pink-500 hover:to-orange-500
                       disabled:opacity-50 disabled:cursor-not-allowed
-                      rounded-2xl border-2 border-emerald-400/50
-                      shadow-[0_0_40px_rgba(0,126,61,0.5)]
+                      rounded-2xl border-2 border-orange-400/50
+                      shadow-[0_0_60px_rgba(255,107,0,0.7),0_0_100px_rgba(255,0,153,0.4)]
                       ${!isDisabled ? 'animate-pulse-glow' : ''}
                       transition-all duration-300
                     `}
@@ -184,7 +186,7 @@ export default function LuckyDrawStage() {
                     
                     {!isDisabled && (
                       <div className="absolute inset-0 rounded-2xl overflow-hidden pointer-events-none">
-                        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent animate-light-sweep" />
+                        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent animate-light-sweep" />
                       </div>
                     )}
                   </Button>
@@ -241,7 +243,7 @@ export default function LuckyDrawStage() {
               exit={{ scale: 0.9, opacity: 0 }}
               className="flex flex-col items-center gap-8 p-12"
             >
-              <div className="w-24 h-24 rounded-full bg-gradient-to-br from-emerald-500 to-emerald-700 flex items-center justify-center shadow-[0_0_60px_rgba(0,126,61,0.5)]">
+              <div className="w-24 h-24 rounded-full bg-gradient-to-br from-orange-500 to-pink-600 flex items-center justify-center shadow-[0_0_80px_rgba(255,107,0,0.8),0_0_120px_rgba(255,0,153,0.5)]">
                 <Sparkles className="w-12 h-12 text-white" />
               </div>
               
@@ -256,7 +258,7 @@ export default function LuckyDrawStage() {
               <Button
                 onClick={handleStartEvent}
                 size="lg"
-                className="px-12 py-6 text-xl font-bold bg-emerald-600 hover:bg-emerald-500 rounded-xl shadow-[0_0_30px_rgba(0,126,61,0.5)]"
+                className="px-12 py-6 text-xl font-bold bg-gradient-to-r from-orange-600 to-pink-600 hover:from-orange-500 hover:to-pink-500 rounded-xl shadow-[0_0_50px_rgba(255,107,0,0.8)]"
               >
                 <Play className="w-6 h-6 mr-3" />
                 BẮT ĐẦU
@@ -278,12 +280,12 @@ function StatBadge({
   icon: React.ElementType; 
   label: string; 
   value: number; 
-  color: 'white' | 'emerald' | 'yellow' 
+  color: 'white' | 'orange' | 'cyan' 
 }) {
   const colorClasses = {
     white: 'text-white',
-    emerald: 'text-emerald-400',
-    yellow: 'text-yellow-400',
+    orange: 'text-orange-400',
+    cyan: 'text-cyan-400',
   };
 
   return (

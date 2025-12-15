@@ -45,10 +45,13 @@
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
-  --color-brand: #007e3d;
-  --color-brand-glow: #00ff7a;
+  --color-brand: #ff6b00;
+  --color-brand-glow: #ff8c3a;
   --color-gold: #ffd700;
   --color-gold-dark: #b8860b;
+  --color-magenta: #ff0099;
+  --color-cyan: #00ffff;
+  --color-electric: #00ccff;
 }
 
 :root {
@@ -59,7 +62,7 @@
   --card-foreground: oklch(0.98 0 0);
   --popover: oklch(0.12 0.015 240);
   --popover-foreground: oklch(0.98 0 0);
-  --primary: #007e3d;
+  --primary: #ff6b00;
   --primary-foreground: oklch(0.98 0 0);
   --secondary: oklch(0.18 0.01 240);
   --secondary-foreground: oklch(0.98 0 0);
@@ -70,7 +73,7 @@
   --destructive: oklch(0.577 0.245 27.325);
   --border: oklch(1 0 0 / 12%);
   --input: oklch(1 0 0 / 15%);
-  --ring: #007e3d;
+  --ring: #ff6b00;
   --chart-1: oklch(0.488 0.243 264.376);
   --chart-2: oklch(0.696 0.17 162.48);
   --chart-3: oklch(0.769 0.188 70.08);
@@ -78,12 +81,12 @@
   --chart-5: oklch(0.645 0.246 16.439);
   --sidebar: oklch(0.1 0.01 240);
   --sidebar-foreground: oklch(0.98 0 0);
-  --sidebar-primary: #007e3d;
+  --sidebar-primary: #ff6b00;
   --sidebar-primary-foreground: oklch(0.98 0 0);
   --sidebar-accent: oklch(0.18 0.01 240);
   --sidebar-accent-foreground: oklch(0.98 0 0);
   --sidebar-border: oklch(1 0 0 / 10%);
-  --sidebar-ring: #007e3d;
+  --sidebar-ring: #ff6b00;
 }
 
 @layer base {
@@ -106,8 +109,16 @@ nextjs-portal {
 }
 
 @keyframes pulse-glow {
-  0%, 100% { box-shadow: 0 0 20px rgba(0, 126, 61, 0.4), 0 0 40px rgba(0, 126, 61, 0.2); }
-  50% { box-shadow: 0 0 40px rgba(0, 126, 61, 0.8), 0 0 80px rgba(0, 126, 61, 0.4); }
+  0%, 100% { 
+    box-shadow: 0 0 30px rgba(255, 107, 0, 0.6), 
+                0 0 60px rgba(255, 140, 58, 0.4),
+                0 0 100px rgba(255, 0, 153, 0.3); 
+  }
+  50% { 
+    box-shadow: 0 0 60px rgba(255, 107, 0, 1), 
+                0 0 120px rgba(255, 140, 58, 0.7),
+                0 0 180px rgba(255, 0, 153, 0.5); 
+  }
 }
 
 @keyframes scanline {
