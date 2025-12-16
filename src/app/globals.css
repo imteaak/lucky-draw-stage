@@ -1,4 +1,10 @@
-@import url('https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800;900&display=swap');
+@font-face {
+  font-family: 'Mona Sans';
+  src: url('https://cdn.jsdelivr.net/npm/@github/mona-sans@1.0.1/dist/Mona-Sans.woff2') format('woff2');
+  font-weight: 200 900;
+  font-stretch: 75% 125%;
+  font-display: swap;
+}
 
 @import "tailwindcss";
 @import "tw-animate-css";
@@ -8,10 +14,11 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
+  --font-sans: 'Mona Sans', var(--font-geist-sans), sans-serif;
   --font-mono: var(--font-geist-mono);
-  --font-display: 'Be Vietnam Pro', sans-serif;
-  --font-stage: 'Be Vietnam Pro', sans-serif;
+  --font-display: 'Mona Sans', sans-serif;
+  --font-stage: 'Mona Sans', sans-serif;
+  --font-digital: 'Mona Sans', sans-serif;
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
@@ -45,57 +52,70 @@
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
-  --color-brand: #007e3d;
-  --color-brand-glow: #00a84f;
-  --color-gold: #ffd700;
-  --color-gold-dark: #b8860b;
-  --color-emerald: #00ff7a;
-  --color-cyan: #00d4aa;
-  --color-electric: #00ccff;
+  --color-brand: #ea384c;
+  --color-brand-glow: #ff8a9b;
+  --color-gold: #b38000;
+  --color-gold-dark: #8a6200;
+  --color-stage-red: #d92d20;
+  --color-stage-orange: #f79009;
+  --color-stage-amber: #d97706;
+  --color-stage-glow: #ffffff;
 }
 
 :root {
-  --radius: 0.625rem;
-  --background: oklch(0.08 0.01 240);
-  --foreground: oklch(0.98 0 0);
-  --card: oklch(0.12 0.015 240);
-  --card-foreground: oklch(0.98 0 0);
-  --popover: oklch(0.12 0.015 240);
-  --popover-foreground: oklch(0.98 0 0);
-  --primary: #007e3d;
-  --primary-foreground: oklch(0.98 0 0);
-  --secondary: oklch(0.18 0.01 240);
-  --secondary-foreground: oklch(0.98 0 0);
-  --muted: oklch(0.2 0.01 240);
-  --muted-foreground: oklch(0.65 0 0);
-  --accent: oklch(0.2 0.02 240);
-  --accent-foreground: oklch(0.98 0 0);
+  --radius: 0.75rem;
+  --background: oklch(0.98 0.02 90);
+  /* Soft Warm White */
+  --foreground: oklch(0.2 0.05 30);
+  /* Dark Warm Grey */
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.2 0.05 30);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.2 0.05 30);
+  --primary: #ea384c;
+  --primary-foreground: oklch(1 0 0);
+  --secondary: oklch(0.96 0.01 90);
+  --secondary-foreground: oklch(0.2 0.05 30);
+  --muted: oklch(0.94 0.02 90);
+  --muted-foreground: oklch(0.45 0.05 30);
+  --accent: oklch(0.94 0.05 50);
+  --accent-foreground: oklch(0.2 0.05 30);
   --destructive: oklch(0.577 0.245 27.325);
-  --border: oklch(1 0 0 / 12%);
-  --input: oklch(1 0 0 / 15%);
-  --ring: #007e3d;
+  --border: oklch(0.9 0.02 90);
+  --input: oklch(0.9 0.02 90);
+  --ring: #ea384c;
   --chart-1: oklch(0.488 0.243 264.376);
   --chart-2: oklch(0.696 0.17 162.48);
   --chart-3: oklch(0.769 0.188 70.08);
   --chart-4: oklch(0.627 0.265 303.9);
   --chart-5: oklch(0.645 0.246 16.439);
-  --sidebar: oklch(0.1 0.01 240);
-  --sidebar-foreground: oklch(0.98 0 0);
-  --sidebar-primary: #007e3d;
-  --sidebar-primary-foreground: oklch(0.98 0 0);
-  --sidebar-accent: oklch(0.18 0.01 240);
-  --sidebar-accent-foreground: oklch(0.98 0 0);
-  --sidebar-border: oklch(1 0 0 / 10%);
-  --sidebar-ring: #007e3d;
+  --sidebar: oklch(0.98 0 0);
+  --sidebar-foreground: oklch(0.2 0.05 30);
+  --sidebar-primary: #ea384c;
+  --sidebar-primary-foreground: oklch(1 0 0);
+  --sidebar-accent: oklch(0.96 0.01 90);
+  --sidebar-accent-foreground: oklch(0.2 0.05 30);
+  --sidebar-border: oklch(0.9 0.02 90);
+  --sidebar-ring: #ea384c;
 }
 
 @layer base {
   * {
     @apply border-border outline-ring/50;
   }
+
   body {
     @apply bg-background text-foreground;
-    font-family: 'Be Vietnam Pro', var(--font-geist-sans), sans-serif;
+    font-family: 'Mona Sans', sans-serif;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: 'Mona Sans', sans-serif;
   }
 }
 
@@ -103,46 +123,136 @@ nextjs-portal {
   display: none !important;
 }
 
+/* Animations */
+@keyframes flash-screen {
+
+  0%,
+  100% {
+    opacity: 0;
+  }
+
+  50% {
+    opacity: 0.8;
+  }
+}
+
+@keyframes countdown-pulse {
+  0% {
+    transform: scale(0.5);
+    opacity: 0;
+  }
+
+  50% {
+    transform: scale(1.5);
+    opacity: 1;
+  }
+
+  100% {
+    transform: scale(1);
+    opacity: 0;
+  }
+}
+
+@keyframes shake-button {
+
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+
+  25% {
+    transform: translateX(-5px) rotate(-5deg);
+  }
+
+  75% {
+    transform: translateX(5px) rotate(5deg);
+  }
+}
+
+@keyframes zoom-in-hit {
+  0% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.2);
+    filter: brightness(1.5);
+  }
+
+  100% {
+    transform: scale(1);
+    filter: brightness(1);
+  }
+}
+
 @keyframes light-sweep {
-  0% { transform: translateX(-100%) rotate(25deg); }
-  100% { transform: translateX(200%) rotate(25deg); }
+  0% {
+    transform: translateX(-100%) rotate(25deg);
+    opacity: 0;
+  }
+
+  20% {
+    opacity: 0.5;
+  }
+
+  80% {
+    opacity: 0.5;
+  }
+
+  100% {
+    transform: translateX(200%) rotate(25deg);
+    opacity: 0;
+  }
 }
 
 @keyframes pulse-glow {
-  0%, 100% { 
-    box-shadow: 0 0 40px rgba(0, 126, 61, 0.8), 
-                0 0 80px rgba(0, 168, 79, 0.5),
-                0 0 120px rgba(0, 255, 122, 0.3); 
+
+  0%,
+  100% {
+    box-shadow: 0 0 20px rgba(234, 56, 76, 0.4),
+      0 0 40px rgba(247, 144, 9, 0.2);
   }
-  50% { 
-    box-shadow: 0 0 80px rgba(0, 126, 61, 1), 
-                0 0 160px rgba(0, 168, 79, 0.8),
-                0 0 240px rgba(0, 255, 122, 0.5); 
+
+  50% {
+    box-shadow: 0 0 30px rgba(234, 56, 76, 0.6),
+      0 0 60px rgba(247, 144, 9, 0.4);
+  }
+}
+
+@keyframes shine {
+  to {
+    background-position: 200% center;
   }
 }
 
 @keyframes scanline {
-  0% { transform: translateY(-100%); }
-  100% { transform: translateY(100vh); }
+  0% {
+    transform: translateY(-100%);
+  }
+
+  100% {
+    transform: translateY(100vh);
+  }
 }
 
-@keyframes slot-roll {
-  0% { transform: translateY(0); }
-  100% { transform: translateY(-100%); }
+.animate-flash {
+  animation: flash-screen 0.5s ease-out;
 }
 
-@keyframes sparkle {
-  0%, 100% { opacity: 0; transform: scale(0.5); }
-  50% { opacity: 1; transform: scale(1); }
+.animate-countdown {
+  animation: countdown-pulse 1s ease-in-out;
 }
 
-@keyframes float {
-  0%, 100% { transform: translateY(0px); }
-  50% { transform: translateY(-10px); }
+.animate-shake {
+  animation: shake-button 0.3s ease-in-out;
+}
+
+.animate-zoom-hit {
+  animation: zoom-in-hit 0.4s ease-out;
 }
 
 .animate-light-sweep {
-  animation: light-sweep 4s ease-in-out infinite;
+  animation: light-sweep 3s ease-in-out infinite;
 }
 
 .animate-pulse-glow {
@@ -153,36 +263,20 @@ nextjs-portal {
   animation: scanline 8s linear infinite;
 }
 
-.animate-sparkle {
-  animation: sparkle 1.5s ease-in-out infinite;
-}
-
-.animate-float {
-  animation: float 3s ease-in-out infinite;
-}
-
 .glass-card {
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.02) 100%);
-  backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-.slot-mask {
-  mask-image: linear-gradient(
-    to bottom,
-    transparent 0%,
-    black 20%,
-    black 80%,
-    transparent 100%
-  );
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.1);
 }
 
 .text-glow {
-  text-shadow: 0 0 10px currentColor, 0 0 20px currentColor, 0 0 40px currentColor;
+  text-shadow: 0 0 20px rgba(255, 255, 255, 0.8), 0 0 30px rgba(234, 56, 76, 0.2);
 }
 
 .text-gold {
-  background: linear-gradient(135deg, #ffd700 0%, #ffec8b 50%, #ffd700 100%);
+  background: linear-gradient(180deg, #d97706 0%, #b45309 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -193,6 +287,7 @@ nextjs-portal {
   position: absolute;
   inset: 0;
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
-  opacity: 0.03;
+  opacity: 0.05;
+  mix-blend-mode: overlay;
   pointer-events: none;
 }

@@ -5,7 +5,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import confetti from 'canvas-confetti';
 import { Participant } from '@/lib/types';
 import { Button } from '@/components/ui/button';
-import { Check, Undo2, Trophy, Sparkles, Star } from 'lucide-react';
+import { FaCheck, FaUndo, FaTrophy } from 'react-icons/fa';
 
 interface ResultOverlayProps {
   isVisible: boolean;
@@ -22,12 +22,12 @@ export function ResultOverlay({ isVisible, winner, onSave, onUndo, playSfx }: Re
     if (isVisible && winner && !confettiFiredRef.current) {
       confettiFiredRef.current = true;
       playSfx('win');
-      
+
       const duration = 4000;
       const animationEnd = Date.now() + duration;
-      
-      const colors = ['#007e3d', '#00ff7a', '#ffd700', '#ffffff', '#00d4aa', '#00a84f'];
-      
+
+      const colors = ['#ea384c', '#f79009', '#fde047', '#ffffff'];
+
       const frame = () => {
         confetti({
           particleCount: 5,
@@ -52,9 +52,9 @@ export function ResultOverlay({ isVisible, winner, onSave, onUndo, playSfx }: Re
           requestAnimationFrame(frame);
         }
       };
-      
+
       frame();
-      
+
       setTimeout(() => {
         confetti({
           particleCount: 200,
@@ -66,7 +66,7 @@ export function ResultOverlay({ isVisible, winner, onSave, onUndo, playSfx }: Re
         });
         playSfx('pop');
       }, 500);
-      
+
       setTimeout(() => {
         confetti({
           particleCount: 100,
@@ -74,12 +74,12 @@ export function ResultOverlay({ isVisible, winner, onSave, onUndo, playSfx }: Re
           spread: 360,
           origin: { y: 0.4 },
           colors,
-          shapes: ['star'],
+          shapes: ['star', 'circle'],
           scalar: 1.5,
         });
       }, 1000);
     }
-    
+
     if (!isVisible) {
       confettiFiredRef.current = false;
     }
@@ -92,100 +92,49 @@ export function ResultOverlay({ isVisible, winner, onSave, onUndo, playSfx }: Re
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          className="fixed inset-0 z-50 flex items-center justify-center"
+          className="fixed inset-0 z-50 flex items-center justify-center p-8 bg-white/40 backdrop-blur-md"
         >
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="absolute inset-0 bg-gradient-to-br from-black/80 via-emerald-950/70 to-black/80 backdrop-blur-md"
-          />
-          
           <div className="absolute inset-0 overflow-hidden pointer-events-none">
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[1000px] h-[1000px] rounded-full bg-gradient-radial from-emerald-500/30 via-green-500/10 to-transparent blur-3xl animate-pulse" />
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[900px] h-[900px] rounded-full bg-gradient-radial from-orange-200/60 via-yellow-100/40 to-transparent blur-3xl animate-pulse" />
           </div>
-
-          {[...Array(12)].map((_, i) => (
-            <motion.div
-              key={i}
-              initial={{ opacity: 0, scale: 0 }}
-              animate={{ opacity: [0, 1, 0], scale: [0, 1.5, 2] }}
-              transition={{ 
-                delay: i * 0.15, 
-                duration: 2, 
-                repeat: Infinity,
-                repeatDelay: 1 
-              }}
-              className="absolute w-3 h-3 rounded-full bg-gradient-to-r from-yellow-400 to-amber-300"
-              style={{
-                left: `${50 + 35 * Math.cos((i * 30 * Math.PI) / 180)}%`,
-                top: `${50 + 35 * Math.sin((i * 30 * Math.PI) / 180)}%`,
-              }}
-            />
-          ))}
 
           <motion.div
             initial={{ scale: 0.8, opacity: 0, y: 50 }}
             animate={{ scale: 1, opacity: 1, y: 0 }}
             exit={{ scale: 0.9, opacity: 0, y: -30 }}
-            transition={{ type: "spring", damping: 15, stiffness: 300 }}
-            className="relative z-10 flex flex-col items-center gap-10 p-12"
+            transition={{ type: "spring", damping: 20, stiffness: 300 }}
+            className="relative z-10 flex flex-col items-center gap-12 max-w-6xl w-full"
           >
             <motion.div
               initial={{ scale: 0 }}
               animate={{ scale: 1 }}
               transition={{ delay: 0.2, type: "spring", damping: 8 }}
-              className="relative flex items-center gap-6"
+              className="relative flex items-center gap-8"
             >
-              <motion.div
-                animate={{ 
-                  rotate: [0, -15, 15, -10, 10, 0],
-                  scale: [1, 1.1, 1, 1.1, 1]
-                }}
-                transition={{ 
-                  duration: 2, 
-                  repeat: Infinity,
-                  repeatDelay: 1
-                }}
-              >
-                <Trophy className="w-20 h-20 text-yellow-400 drop-shadow-[0_0_20px_rgba(255,215,0,0.8)]" />
-              </motion.div>
-              
-              <motion.h1 
-                className="font-['Be_Vietnam_Pro'] text-6xl md:text-8xl font-black text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 via-amber-300 to-yellow-500 drop-shadow-[0_0_30px_rgba(255,215,0,0.6)]"
+              <FaTrophy className="w-20 h-20 text-yellow-500 drop-shadow-xl animate-bounce" style={{ animationDuration: '2s' }} />
+
+              <motion.h1
+                className="font-sans text-7xl md:text-9xl font-black text-transparent bg-clip-text bg-gradient-to-r from-red-600 to-orange-500 drop-shadow-sm uppercase tracking-tight"
                 animate={{
                   textShadow: [
-                    '0 0 20px rgba(255,215,0,0.6)',
-                    '0 0 40px rgba(255,215,0,0.9)',
-                    '0 0 20px rgba(255,215,0,0.6)',
+                    '0 4px 12px rgba(220,38,38,0.2)',
+                    '0 8px 24px rgba(220,38,38,0.3)',
+                    '0 4px 12px rgba(220,38,38,0.2)',
                   ]
                 }}
                 transition={{ duration: 2, repeat: Infinity }}
               >
                 CHÚC MỪNG
               </motion.h1>
-              
-              <motion.div
-                animate={{ 
-                  rotate: [0, 15, -15, 10, -10, 0],
-                  scale: [1, 1.1, 1, 1.1, 1]
-                }}
-                transition={{ 
-                  duration: 2, 
-                  repeat: Infinity,
-                  repeatDelay: 1,
-                  delay: 0.5
-                }}
-              >
-                <Trophy className="w-20 h-20 text-yellow-400 drop-shadow-[0_0_20px_rgba(255,215,0,0.8)]" />
-              </motion.div>
+
+              <FaTrophy className="w-20 h-20 text-yellow-500 drop-shadow-xl animate-bounce" style={{ animationDuration: '2s', animationDelay: '0.1s' }} />
             </motion.div>
 
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.4 }}
-              className="flex flex-col md:flex-row items-center gap-6 md:gap-10"
+              className="grid grid-cols-1 md:grid-cols-3 gap-6 w-full"
             >
               <WinnerCard label="Mã Khách Hàng" value={winner.customer_code} delay={0.5} />
               <WinnerCard label="Mã Trúng Thưởng" value={winner.prize_code} delay={0.6} isHighlight />
@@ -196,23 +145,23 @@ export function ResultOverlay({ isVisible, winner, onSave, onUndo, playSfx }: Re
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.8 }}
-              className="flex items-center gap-4 mt-4"
+              className="flex items-center gap-6 mt-4"
             >
               <Button
                 onClick={onSave}
                 size="lg"
-                className="bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-lg px-8 py-6 rounded-xl shadow-[0_0_30px_rgba(0,126,61,0.5)] hover:shadow-[0_0_40px_rgba(0,126,61,0.7)] transition-all"
+                className="bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-500 hover:to-emerald-500 text-white font-bold text-xl px-12 py-8 rounded-2xl shadow-xl hover:shadow-2xl hover:-translate-y-1 transition-all uppercase tracking-wider"
               >
-                <Check className="w-6 h-6 mr-2" />
+                <FaCheck className="w-6 h-6 mr-3" />
                 Lưu Kết Quả
               </Button>
               <Button
                 onClick={onUndo}
                 variant="outline"
                 size="lg"
-                className="border-white/30 text-white hover:bg-white/10 font-bold text-lg px-8 py-6 rounded-xl"
+                className="border-2 border-red-200 text-red-700 bg-white/80 hover:bg-white font-bold text-xl px-10 py-8 rounded-2xl shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all uppercase tracking-wider"
               >
-                <Undo2 className="w-6 h-6 mr-2" />
+                <FaUndo className="w-6 h-6 mr-3" />
                 Hoàn Tác
               </Button>
             </motion.div>
@@ -230,36 +179,27 @@ function WinnerCard({ label, value, delay, isHighlight }: { label: string; value
       animate={{ opacity: 1, scale: 1 }}
       transition={{ delay }}
       className={`
-        relative p-6 rounded-2xl glass-card
-        ${isHighlight ? 'shadow-[0_0_40px_rgba(255,215,0,0.3)]' : ''}
+        relative p-8 rounded-3xl backdrop-blur-xl flex flex-col items-center justify-center text-center gap-4 h-full
+        ${isHighlight
+          ? 'bg-gradient-to-br from-white via-orange-50 to-white border-2 border-orange-200 shadow-[0_20px_50px_rgba(249,115,22,0.2)]'
+          : 'bg-white/80 border border-white shadow-xl'
+        }
       `}
     >
-      <div className={`
-        absolute inset-0 rounded-2xl
-        ${isHighlight 
-          ? 'bg-gradient-to-br from-yellow-500/20 via-amber-500/10 to-orange-500/20' 
-          : 'bg-gradient-to-br from-emerald-500/10 via-transparent to-emerald-500/5'
-        }
-      `} />
-      
-      <div className="relative flex flex-col items-center gap-2">
-        <span className={`text-sm font-semibold uppercase tracking-widest ${isHighlight ? 'text-yellow-400' : 'text-emerald-400'}`}>
-          {label}
-        </span>
-        <span className={`
-          font-['Orbitron'] font-black text-3xl md:text-4xl
-          ${isHighlight ? 'text-gold' : 'text-white text-glow'}
-        `}>
-          {value}
-        </span>
-      </div>
-      
+      <span className={`text-sm font-bold uppercase tracking-widest ${isHighlight ? 'text-orange-600' : 'text-slate-500'}`}>
+        {label}
+      </span>
+      <span className={`
+        font-sans font-black leading-tight break-words w-full
+        ${isHighlight ? 'text-4xl md:text-5xl text-orange-600' : 'text-3xl md:text-4xl text-slate-800'}
+      `}>
+        {value}
+      </span>
+
       {isHighlight && (
-        <>
-          <div className="absolute -top-1 -right-1 w-3 h-3 bg-yellow-400 rounded-full animate-sparkle" />
-          <div className="absolute -bottom-1 -left-1 w-2 h-2 bg-yellow-400 rounded-full animate-sparkle" style={{ animationDelay: '0.5s' }} />
-          <div className="absolute top-1/2 -right-2 w-2 h-2 bg-yellow-400 rounded-full animate-sparkle" style={{ animationDelay: '1s' }} />
-        </>
+        <div className="absolute inset-0 rounded-3xl overflow-hidden pointer-events-none">
+          <div className="absolute inset-0 bg-gradient-to-tr from-orange-400/5 to-yellow-400/5" />
+        </div>
       )}
     </motion.div>
   );

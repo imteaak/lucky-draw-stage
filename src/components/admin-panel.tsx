@@ -11,10 +11,20 @@ import { Slider } from '@/components/ui/slider';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Textarea } from '@/components/ui/textarea';
 import { ScrollArea } from '@/components/ui/scroll-area';
-import { 
-  Settings, Upload, History, Download, Volume2, VolumeX, 
-  Users, Trophy, Clock, Trash2, FileJson, FileText 
-} from 'lucide-react';
+import {
+  FaCog,
+  FaUpload,
+  FaHistory,
+  FaDownload,
+  FaVolumeUp,
+  FaVolumeMute,
+  FaUsers,
+  FaTrophy,
+  FaClock,
+  FaTrash,
+  FaFileCode,
+  FaFileAlt
+} from 'react-icons/fa';
 import { Participant, Winner, DrawSettings } from '@/lib/types';
 
 interface AdminPanelProps {
@@ -55,13 +65,13 @@ export function AdminPanel({
     try {
       setImportError('');
       let data: Participant[];
-      
+
       if (importText.trim().startsWith('[')) {
         data = JSON.parse(importText);
       } else {
         const lines = importText.trim().split('\n');
         const headers = lines[0].split(',').map(h => h.trim().toLowerCase());
-        
+
         data = lines.slice(1).map(line => {
           const values = line.split(',').map(v => v.trim());
           const obj: Record<string, string> = {};
@@ -109,35 +119,35 @@ export function AdminPanel({
         <Button
           variant="ghost"
           size="icon"
-          className="fixed top-4 right-4 z-40 bg-white/5 hover:bg-white/10 backdrop-blur-sm rounded-full w-12 h-12"
+          className="fixed top-4 right-4 z-40 bg-white/40 hover:bg-white/60 backdrop-blur-sm rounded-full w-12 h-12 shadow-md text-orange-800"
         >
-          <Settings className="w-6 h-6" />
+          <FaCog className="w-6 h-6" />
         </Button>
       </SheetTrigger>
-      <SheetContent className="w-[400px] bg-slate-950/95 border-white/10 backdrop-blur-xl">
+      <SheetContent className="w-[400px] bg-white/95 border-l border-orange-200 backdrop-blur-xl">
         <SheetHeader>
-          <SheetTitle className="text-white font-['Orbitron']">Bảng Điều Khiển</SheetTitle>
+          <SheetTitle className="text-orange-950 font-['Orbitron']">Bảng Điều Khiển</SheetTitle>
         </SheetHeader>
-        
+
         <Tabs defaultValue="import" className="mt-6">
-          <TabsList className="grid grid-cols-3 bg-white/5">
-            <TabsTrigger value="import" className="data-[state=active]:bg-emerald-600">
-              <Upload className="w-4 h-4 mr-1" />
+          <TabsList className="grid grid-cols-3 bg-orange-100/50">
+            <TabsTrigger value="import" className="data-[state=active]:bg-orange-500 data-[state=active]:text-white">
+              <FaUpload className="w-4 h-4 mr-1" />
               Import
             </TabsTrigger>
-            <TabsTrigger value="history" className="data-[state=active]:bg-emerald-600">
-              <History className="w-4 h-4 mr-1" />
+            <TabsTrigger value="history" className="data-[state=active]:bg-orange-500 data-[state=active]:text-white">
+              <FaHistory className="w-4 h-4 mr-1" />
               Lịch sử
             </TabsTrigger>
-            <TabsTrigger value="settings" className="data-[state=active]:bg-emerald-600">
-              <Settings className="w-4 h-4 mr-1" />
+            <TabsTrigger value="settings" className="data-[state=active]:bg-orange-500 data-[state=active]:text-white">
+              <FaCog className="w-4 h-4 mr-1" />
               Cài đặt
             </TabsTrigger>
           </TabsList>
-          
+
           <TabsContent value="import" className="mt-4 space-y-4">
             <div>
-              <Label className="text-white/70">Dán dữ liệu CSV hoặc JSON</Label>
+              <Label className="text-slate-600">Dán dữ liệu CSV hoặc JSON</Label>
               <Textarea
                 value={importText}
                 onChange={(e) => setImportText(e.target.value)}
@@ -146,67 +156,67 @@ export function AdminPanel({
 CSV:
 customer_code,prize_code,customer_name
 KH-001,GOLD-001,Nguyen Van A`}
-                className="mt-2 h-40 bg-white/5 border-white/10 text-white font-mono text-sm"
+                className="mt-2 h-40 bg-white border-orange-200 text-slate-800 font-mono text-sm focus:border-orange-500"
               />
               {importError && (
-                <p className="text-red-400 text-sm mt-2">{importError}</p>
+                <p className="text-red-500 text-sm mt-2">{importError}</p>
               )}
             </div>
-            <Button onClick={handleImport} className="w-full bg-emerald-600 hover:bg-emerald-500">
-              <Upload className="w-4 h-4 mr-2" />
+            <Button onClick={handleImport} className="w-full bg-orange-600 hover:bg-orange-500 text-white shadow-md">
+              <FaUpload className="w-4 h-4 mr-2" />
               Import Dữ Liệu ({participants.length} người)
             </Button>
-            
-            <div className="pt-4 border-t border-white/10">
-              <div className="flex items-center justify-between text-sm text-white/70 mb-2">
+
+            <div className="pt-4 border-t border-orange-100">
+              <div className="flex items-center justify-between text-sm text-slate-600 mb-2">
                 <span className="flex items-center gap-2">
-                  <Users className="w-4 h-4" />
+                  <FaUsers className="w-4 h-4 text-orange-400" />
                   Tổng số
                 </span>
-                <span className="font-bold text-white">{participants.length}</span>
+                <span className="font-bold text-slate-800">{participants.length}</span>
               </div>
-              <div className="flex items-center justify-between text-sm text-white/70 mb-2">
+              <div className="flex items-center justify-between text-sm text-slate-600 mb-2">
                 <span className="flex items-center gap-2">
-                  <Trophy className="w-4 h-4" />
+                  <FaTrophy className="w-4 h-4 text-red-400" />
                   Đã trúng
                 </span>
-                <span className="font-bold text-emerald-400">{winners.length}</span>
+                <span className="font-bold text-red-600">{winners.length}</span>
               </div>
-              <div className="flex items-center justify-between text-sm text-white/70">
+              <div className="flex items-center justify-between text-sm text-slate-600">
                 <span className="flex items-center gap-2">
-                  <Clock className="w-4 h-4" />
+                  <FaClock className="w-4 h-4 text-amber-400" />
                   Còn lại
                 </span>
-                <span className="font-bold text-yellow-400">{participants.length - winners.length}</span>
+                <span className="font-bold text-amber-600">{participants.length - winners.length}</span>
               </div>
             </div>
           </TabsContent>
-          
+
           <TabsContent value="history" className="mt-4 space-y-4">
             <div className="flex gap-2">
-              <Button 
-                onClick={() => handleExport('json')} 
-                variant="outline" 
+              <Button
+                onClick={() => handleExport('json')}
+                variant="outline"
                 size="sm"
-                className="flex-1 border-white/20 text-white hover:bg-white/10"
+                className="flex-1 border-orange-200 text-orange-700 hover:bg-orange-50"
               >
-                <FileJson className="w-4 h-4 mr-1" />
+                <FaFileCode className="w-4 h-4 mr-1" />
                 JSON
               </Button>
-              <Button 
-                onClick={() => handleExport('csv')} 
-                variant="outline" 
+              <Button
+                onClick={() => handleExport('csv')}
+                variant="outline"
                 size="sm"
-                className="flex-1 border-white/20 text-white hover:bg-white/10"
+                className="flex-1 border-orange-200 text-orange-700 hover:bg-orange-50"
               >
-                <FileText className="w-4 h-4 mr-1" />
+                <FaFileAlt className="w-4 h-4 mr-1" />
                 CSV
               </Button>
             </div>
-            
+
             <ScrollArea className="h-[400px]">
               {winners.length === 0 ? (
-                <div className="text-center text-white/50 py-8">
+                <div className="text-center text-slate-400 py-8">
                   Chưa có người trúng thưởng
                 </div>
               ) : (
@@ -216,60 +226,60 @@ KH-001,GOLD-001,Nguyen Van A`}
                       key={`${w.customer_code}-${i}`}
                       initial={{ opacity: 0, x: -20 }}
                       animate={{ opacity: 1, x: 0 }}
-                      className="p-3 rounded-lg bg-white/5 border border-white/10"
+                      className="p-3 rounded-lg bg-white border border-orange-100 shadow-sm"
                     >
                       <div className="flex items-center justify-between mb-1">
-                        <span className="font-mono text-emerald-400 font-bold">{w.customer_code}</span>
-                        <span className="text-xs text-white/50">#{winners.length - i}</span>
+                        <span className="font-mono text-orange-600 font-bold">{w.customer_code}</span>
+                        <span className="text-xs text-slate-400">#{winners.length - i}</span>
                       </div>
-                      <div className="text-sm text-white">{w.customer_name}</div>
-                      <div className="text-xs text-yellow-400 font-mono">{w.prize_code}</div>
+                      <div className="text-sm text-slate-700">{w.customer_name}</div>
+                      <div className="text-xs text-amber-600 font-mono">{w.prize_code}</div>
                     </motion.div>
                   ))}
                 </div>
               )}
             </ScrollArea>
-            
+
             {winners.length > 0 && (
               <Button
                 onClick={onReset}
                 variant="destructive"
-                className="w-full"
+                className="w-full bg-red-600 hover:bg-red-500"
               >
-                <Trash2 className="w-4 h-4 mr-2" />
+                <FaTrash className="w-4 h-4 mr-2" />
                 Xóa Lịch Sử
               </Button>
             )}
           </TabsContent>
-          
+
           <TabsContent value="settings" className="mt-4 space-y-6">
             <div className="space-y-4">
               <div className="flex items-center justify-between">
-                <Label className="text-white/70">Tránh trùng lặp</Label>
+                <Label className="text-slate-700">Tránh trùng lặp</Label>
                 <Switch
                   checked={settings.avoidDuplicates}
                   onCheckedChange={(v) => onSettingsChange({ avoidDuplicates: v })}
                 />
               </div>
-              
+
               <div className="space-y-2">
-                <Label className="text-white/70">Thời lượng quay (ms)</Label>
+                <Label className="text-slate-700">Thời lượng quay (ms)</Label>
                 <Input
                   type="number"
                   value={settings.spinDuration}
                   onChange={(e) => onSettingsChange({ spinDuration: Number(e.target.value) })}
-                  className="bg-white/5 border-white/10 text-white"
+                  className="bg-white border-orange-200 text-slate-800"
                   min={2000}
                   max={10000}
                   step={500}
                 />
               </div>
             </div>
-            
-            <div className="space-y-4 pt-4 border-t border-white/10">
+
+            <div className="space-y-4 pt-4 border-t border-orange-100">
               <div className="flex items-center justify-between">
-                <Label className="text-white/70 flex items-center gap-2">
-                  {audioSettings.muted ? <VolumeX className="w-4 h-4" /> : <Volume2 className="w-4 h-4" />}
+                <Label className="text-slate-700 flex items-center gap-2">
+                  {audioSettings.muted ? <FaVolumeMute className="w-4 h-4" /> : <FaVolumeUp className="w-4 h-4" />}
                   Âm thanh
                 </Label>
                 <Switch
@@ -277,9 +287,9 @@ KH-001,GOLD-001,Nguyen Van A`}
                   onCheckedChange={onToggleMute}
                 />
               </div>
-              
+
               <div className="space-y-2">
-                <Label className="text-white/50 text-sm">Nhạc nền</Label>
+                <Label className="text-slate-500 text-sm">Nhạc nền</Label>
                 <Slider
                   value={[audioSettings.bgmVolume * 100]}
                   onValueChange={([v]) => onBgmVolumeChange(v / 100)}
@@ -289,9 +299,9 @@ KH-001,GOLD-001,Nguyen Van A`}
                   disabled={audioSettings.muted}
                 />
               </div>
-              
+
               <div className="space-y-2">
-                <Label className="text-white/50 text-sm">Hiệu ứng</Label>
+                <Label className="text-slate-500 text-sm">Hiệu ứng</Label>
                 <Slider
                   value={[audioSettings.sfxVolume * 100]}
                   onValueChange={([v]) => onSfxVolumeChange(v / 100)}

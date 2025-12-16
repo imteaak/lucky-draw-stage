@@ -25,27 +25,32 @@ function SlotColumn({ value, label, isSpinning, shouldStop, onStop, allValues, i
     if (isSpinning && !shouldStop) {
       hasStoppedRef.current = false;
       startTimeRef.current = performance.now();
-      
+
       const shuffled = [...allValues].sort(() => Math.random() - 0.5);
-      setDisplayValues([...shuffled, ...shuffled, ...shuffled]);
-      
+      setDisplayValues([...shuffled, ...shuffled, ...shuffled, ...shuffled]);
+
       let idx = 0;
       const animate = () => {
         const elapsed = performance.now() - startTimeRef.current;
-        const baseInterval = 50;
-        const slowdown = Math.min(elapsed / 3000, 1) * 150;
-        
-        idx = (idx + 1) % (shuffled.length * 3);
+        const progress = Math.min(elapsed / 4000, 1);
+
+        // Smooth easing function for deceleration
+        const easeOut = 1 - Math.pow(1 - progress, 3);
+        const baseInterval = 30;
+        const maxSlowdown = 200;
+        const slowdown = easeOut * maxSlowdown;
+
+        idx = (idx + 1) % (shuffled.length * 4);
         setCurrentIndex(idx);
-        
+
         animationRef.current = setTimeout(() => {
           requestAnimationFrame(animate);
         }, baseInterval + slowdown);
       };
-      
+
       animate();
     }
-    
+
     return () => {
       if (animationRef.current) {
         clearTimeout(animationRef.current);
@@ -59,50 +64,72 @@ function SlotColumn({ value, label, isSpinning, shouldStop, onStop, allValues, i
       if (animationRef.current) {
         clearTimeout(animationRef.current);
       }
-      
-      setDisplayValues([value]);
-      setCurrentIndex(0);
-      
-      setTimeout(() => {
-        onStop();
-      }, 100);
-    }
-  }, [shouldStop, value, onStop]);
 
-  const displayValue = isSpinning && !shouldStop 
-    ? displayValues[currentIndex] || value 
+      // Smooth deceleration before stopping
+      let decelerateSteps = 0;
+      const maxDecelerateSteps = 5;
+
+      const decelerate = () => {
+        if (decelerateSteps < maxDecelerateSteps) {
+          const nextIdx = (currentIndex + 1) % displayValues.length;
+          setCurrentIndex(nextIdx);
+          decelerateSteps++;
+
+          const delay = 50 + (decelerateSteps * 30); // Gradually slow down
+          setTimeout(decelerate, delay);
+        } else {
+          // Final stop with the correct value
+          setDisplayValues([value]);
+          setCurrentIndex(0);
+
+          setTimeout(() => {
+            onStop();
+          }, 150);
+        }
+      };
+
+      decelerate();
+    }
+  }, [shouldStop, value, onStop, currentIndex, displayValues.length]);
+
+  const displayValue = isSpinning && !shouldStop
+    ? displayValues[currentIndex] || value
     : value;
 
   return (
-    <div className="flex flex-col items-center gap-3">
-      <span className="text-sm font-semibold text-emerald-400 uppercase tracking-widest">
+    <div className="flex flex-col items-center gap-6">
+      <span className="text-lg font-black text-red-700 uppercase tracking-widest bg-white/70 px-6 py-2 rounded-full border border-red-200 backdrop-blur-sm shadow-sm">
         {label}
       </span>
-      <div className="relative overflow-hidden rounded-2xl glass-card p-1">
-        <div 
+      <div
+        className={`
+          relative overflow-hidden rounded-3xl p-2 shadow-2xl transition-all duration-300
+          ${isResult ? 'bg-gradient-to-br from-red-600 to-red-800 scale-110 z-10' : 'bg-gradient-to-br from-white to-slate-100 border border-white/60'}
+        `}
+      >
+        <div
           className={`
-            relative w-[280px] h-[100px] flex items-center justify-center overflow-hidden rounded-xl
-            ${isResult ? 'bg-gradient-to-br from-emerald-900/60 to-emerald-950/80' : 'bg-gradient-to-br from-slate-900/90 to-slate-950/95'}
-            ${isResult ? 'shadow-[0_0_30px_rgba(0,126,61,0.6),inset_0_0_20px_rgba(0,255,122,0.1)]' : ''}
-            transition-all duration-500
+            relative w-[340px] h-[160px] flex items-center justify-center overflow-hidden rounded-2xl
+            ${isResult ? 'bg-transparent' : 'bg-transparent'}
           `}
         >
           {isSpinning && !shouldStop && (
-            <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-black/40 pointer-events-none z-10" />
+            <div className="absolute inset-0 bg-gradient-to-b from-white/60 via-transparent to-white/60 pointer-events-none z-10" />
           )}
-          
+
           <motion.div
             key={displayValue}
-            initial={isSpinning ? { y: -30, opacity: 0 } : false}
-            animate={{ y: 0, opacity: 1 }}
-            transition={{ 
+            initial={isSpinning ? { y: -50, opacity: 0, scale: 0.9 } : { scale: 1 }}
+            animate={isResult ? { scale: [1, 1.2, 1], filter: ["brightness(1)", "brightness(1.5)", "brightness(1)"] } : { y: 0, opacity: 1, scale: 1 }}
+            transition={{
               duration: isSpinning ? 0.05 : 0.3,
-              ease: isSpinning ? "linear" : "easeOut"
+              ease: "easeOut"
             }}
             className={`
-              font-['Orbitron'] font-extrabold text-4xl md:text-5xl tracking-wider
-              ${isResult ? 'text-emerald-300 text-glow' : 'text-white'}
+              font-sans font-black text-5xl md:text-6xl tracking-tight text-center px-4 leading-tight
+              ${isResult ? 'text-white drop-shadow-[0_4px_4px_rgba(0,0,0,0.3)]' : 'text-slate-900'}
               ${isSpinning && !shouldStop ? 'blur-[1px]' : ''}
+              transition-all duration-200
             `}
           >
             {displayValue}
@@ -110,18 +137,10 @@ function SlotColumn({ value, label, isSpinning, shouldStop, onStop, allValues, i
 
           {isSpinning && !shouldStop && (
             <div className="absolute inset-0 pointer-events-none">
-              <div className="absolute inset-0 bg-gradient-to-b from-transparent via-emerald-500/5 to-transparent animate-scanline" />
+              <div className="absolute inset-0 bg-gradient-to-b from-transparent via-orange-500/10 to-transparent animate-scanline" />
             </div>
           )}
         </div>
-        
-        <div className={`
-          absolute inset-0 rounded-2xl pointer-events-none transition-all duration-300
-          ${isResult 
-            ? 'shadow-[inset_0_0_0_3px_rgba(0,126,61,0.8),0_0_40px_rgba(0,126,61,0.4)]' 
-            : 'shadow-[inset_0_0_0_1px_rgba(255,255,255,0.1)]'
-          }
-        `} />
       </div>
     </div>
   );
@@ -136,18 +155,18 @@ interface SlotMachineProps {
   playSfx: (type: 'tick' | 'stop') => void;
 }
 
-export function SlotMachine({ 
-  participant, 
-  phase, 
-  allParticipants, 
+export function SlotMachine({
+  participant,
+  phase,
+  allParticipants,
   onSpinComplete,
   spinDuration,
-  playSfx 
+  playSfx
 }: SlotMachineProps) {
   const [slot1Stopped, setSlot1Stopped] = useState(false);
   const [slot2Stopped, setSlot2Stopped] = useState(false);
   const [slot3Stopped, setSlot3Stopped] = useState(false);
-  
+
   const stopSequenceRef = useRef<NodeJS.Timeout[]>([]);
 
   useEffect(() => {
@@ -163,12 +182,12 @@ export function SlotMachine({
         setSlot1Stopped(true);
         playSfx('stop');
       }, spinDuration * 0.55);
-      
+
       const t2 = setTimeout(() => {
         setSlot2Stopped(true);
         playSfx('stop');
       }, spinDuration * 0.75);
-      
+
       const t3 = setTimeout(() => {
         setSlot3Stopped(true);
         playSfx('stop');
@@ -185,28 +204,28 @@ export function SlotMachine({
   const handleSlot3Stop = useCallback(() => {
     setTimeout(() => {
       onSpinComplete();
-    }, 200);
+    }, 400); // Increased delay for dramatic pause
   }, [onSpinComplete]);
 
   const isSpinning = phase === 'spinning';
   const isResult = phase === 'result';
-  
+
   const defaultDisplay = {
     customer_code: '???',
     prize_code: '???',
     customer_name: '???',
   };
-  
+
   const display = participant || defaultDisplay;
 
   return (
-    <div className="flex flex-col md:flex-row items-center justify-center gap-6 md:gap-10">
+    <div className="flex flex-col xl:flex-row items-center justify-center gap-10 xl:gap-16">
       <SlotColumn
         value={display.customer_code}
         label="Mã Khách Hàng"
         isSpinning={isSpinning}
         shouldStop={slot1Stopped}
-        onStop={() => {}}
+        onStop={() => { }}
         allValues={allParticipants.map(p => p.customer_code)}
         isResult={isResult}
       />
@@ -215,7 +234,7 @@ export function SlotMachine({
         label="Mã Trúng Thưởng"
         isSpinning={isSpinning}
         shouldStop={slot2Stopped}
-        onStop={() => {}}
+        onStop={() => { }}
         allValues={allParticipants.map(p => p.prize_code)}
         isResult={isResult}
       />
